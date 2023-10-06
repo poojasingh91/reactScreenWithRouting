@@ -4,7 +4,6 @@ import './index.css';
 import Home from './routes/Home';
 import Products from './routes/Products';
 import Cart from './routes/Cart';
-import MyRequiredProduct from './routes/MyRequiredProduct';
 import reportWebVitals from './reportWebVitals';
 import Header from './routes/Header';
 
@@ -12,7 +11,8 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import MyContainer from './routes/MyRequiredProduct';
+import MyProductDetails from './routes/MyProductDetails';
+import MyCartDetails from './routes/MyCartDetails';
 
 const router = createBrowserRouter([
   {
@@ -37,7 +37,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/products/:id",
-    element: <MyRequiredProduct/>,
+    element: <MyProductDetails/>,
+  },
+  {
+    path: "/cart/:id",
+    element: <MyCartDetails/>,
   },
   
   

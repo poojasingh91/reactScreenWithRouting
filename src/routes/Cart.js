@@ -1,24 +1,37 @@
 import React from 'react'
 import { Outlet, Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
 
 const Cart = () => {
+    const [carts,setCarts]=useState([]);
+
+  useEffect(()=>{
+    async function fetchData(){
+      {
+        const response=await fetch(`https://dummyjson.com/carts`);
+        const jsonData=await response.json();
+        console.log(jsonData);
+        setCarts(jsonData.carts);
+      }
+    }
+    fetchData();
+  }, []);
   return (
+    <>
     <div>
+        <h2>Number of Carts</h2>
+        {carts.map((cart)=>{
+            return <div>
+                <Link to={`${cart.id}`}>{cart.total}</Link>
+            </div>
+        })}
       <ul>
-        <li>
-            <Link to={`/cart/1`}>Cart1</Link>
-        </li>
-        <li>
-            <Link to={`/cart/2`}>Cart2</Link>
-        </li>
-        <li>
-            <Link to={`/cart/3`}>Cart3</Link>
-        </li>
-        <li>
-            <Link to={`/cart/4`}>Cart4</Link>
-        </li>
       </ul>
     </div>
+    <div id="detail">
+        <Outlet/>
+    </div>
+    </>
   )
 }
 

@@ -1,23 +1,41 @@
 import React from 'react'
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useParams } from "react-router-dom";
+import { useState, useEffect } from 'react';
 
 const Products = () => {
+    const [products,setProducts]=useState([]);
+    // const[loading,setLoading]=useState(true);
+
+  useEffect(()=>{
+    async function fetchData(){
+      {
+        const response=await fetch(`https://dummyjson.com/products`);
+        const jsonData=await response.json();
+        console.log(jsonData);
+        setProducts(jsonData.products);
+        // setLoading(false);
+      }
+    //   catch(error){
+    //     console.error('Error fetching data:',error);
+    //     setLoading(false);
+    //   }
+    }
+    fetchData();
+  }, []);
+
+  
   return (
     <>
     <div>
+        <h2>Product List</h2>
       <ul>
-        <li>
-            <Link to={`/products/1`}>Product1</Link>
-        </li>
-        <li>
-            <Link to={`/products/2`}>Product2</Link>
-        </li>
-        <li>
-            <Link to={`/products/3`}>Product3</Link>
-        </li>
-        <li>
-            <Link to={`/products/4`}>Product4</Link>
-        </li>
+        {products.map((product)=>{
+            return (
+            <div key={product.id}>
+                <Link to={`${product.id}`}>{product.title}</Link>
+            </div>)
+            })
+        }
       </ul>
     </div>
 
